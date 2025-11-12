@@ -1,9 +1,13 @@
 import { spawn } from 'child_process';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
 
 const currentFilePath = fileURLToPath(import.meta.url);
 const repoRoot = path.resolve(path.dirname(currentFilePath), '..', '..');
+
+// Ensure the backend has its required environment configured when we spawn it.
+dotenv.config({ path: path.join(repoRoot, 'server', '.env'), override: false });
 
 const SERVER_PORT = process.env.TEST_SERVER_PORT || '4100';
 const serverOrigin = `http://127.0.0.1:${SERVER_PORT}`;
